@@ -1,1 +1,26 @@
 
+Exception을 처리하는 방법
+    
+  exception을 처리할 때 컨트롤러까지 올라가지 않도록 서비스 계층에서 try-catch로 잡는 방법 외 
+  다른 방법인 @RestControllerAdvice 을 사용하는 방법을 알게되어 간략히 정리합니다.
+  간단히 사용법만 정리하고 이 부분은 노션에 상세히 정리하려고 합니다. 
+
+  1. exception을 커스텀해서 만들어둔다. 
+  ex) eeException.class
+  
+  2. @RestControllerAdvice 를 붙여 클래스를 만든다. 
+  + @ExceptionHandler 로 특정 Exception 발생시 호출할 핸들러 메서드를 만들어 준다.
+  ex)
+  @RestControllerAdvice
+  public class ApiAdvice {
+    @ExceptionHandler(eeException.class)
+    public ResponseEntity<String> exampleException(){
+        return ResponseEntity.status(Enum.NO_DATA.getStatus()).body(Enum.NO_DATA.getDescription());
+    }
+  }
+  
+  3. 컨트롤러 단에서 커스텀한 익셉션을 throw 한다.
+  ex)
+  throw new eeException();
+
+
