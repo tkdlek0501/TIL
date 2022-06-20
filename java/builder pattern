@@ -1,1 +1,34 @@
+builder 패턴을 이용할 때 실무에서 실제로 어떤 방식으로 사용하는지 간단히 정리합니다.
 
+1. builder 패턴 이용하는 방법
+
+public class Account {
+
+  @Builder(builderClassName = "createBuilder", builderMethodName = "craeteBuilder")
+  public Account(String name, ...){
+    Assert.hasText(name, "name must not be empty");
+    ...
+
+    this.name = name;
+  }
+
+}
+
+안전하게 객체를 생성하고, builder에 이름을 부여하여 가독성을 높이기 위해
+사용 방식을 위와 같이 알고 있었으나 또 새로운 방법을 알게 돼서 아래 정리해봅니다.
+
+2. builder를 메서드로 감싸는 방법
+
+public class Request {
+
+  Entity toEntity (Request request) {
+    return Enitity.builder()
+              .name(request.getName())
+              .build();
+  }
+
+}
+
+DTO 내부에 Entity의 builder를 감싸는 메서드를 만들어 사용하는 방법입니다.
+
+위 방법들의 자세한 내용은 노션에 '활동 - 공부 정리 - Spring - API 설계시 response와 request  객체 다루기(코드리뷰)'에서 정리했습니다.
