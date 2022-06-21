@@ -1,0 +1,31 @@
+객체의 null 필드를 노출하지 않는 방법으로
+@JsonInclude(JsonInclude.Include.NON_NULL)
+를 사용할 수 있습니다.
+
+예시를 보이자면, 
+public class Dto{
+  private String name;
+  private int age;
+}
+
+필드값에 아무런 값을 넣지 않고,
+조회하는 API를 호출하여 반환한다면 response 는
+"Dto":{
+  "name":null,
+  "age":null
+}
+이렇게 리턴 되는데, 
+
+null 필드를 보이지 않게 하고 싶으면 
+@JsonInclude(JsonInclude.Include.NON_NULL) 을 
+클래스 레벨 혹은 각 필드 레벨에 선언해주면 됩니다.
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Dto{
+  private String name;
+  private int age;
+}
+
+위와 갈이 어노테이션을 추가 했을 때 리턴되는 response는 다음과 같습니다. 
+"Dto":{
+}
