@@ -32,7 +32,7 @@ if(bindingResult.hasErrors()){
 
 기본적인 validation은 위와 같은데, 
 보통 request로 data를 받을 때는 Entity에 직접 담지 않고 DTO를 만들어서 받습니다.
-그 DTO안에 객체 타입의 필드가 있다면 validation을 어떻게 하는지 궁금해서 찾아봤습니다.
+그 DTO안에 List타입의 필드가 있다면 validation을 어떻게 하는지 궁금해서 찾아봤습니다.
 
 바로 코드로 예시를 보이자면, 
 
@@ -49,11 +49,11 @@ public class SubData{
   private String type;
 }
 
-위와 같이 객체 내에 List타입의 필드가 있다고 한다면 우리의 의도는 SubData 에 설정한 유효성 검증도 실행되게 하는 것입니다.
+위와 같이 객체 내에 SubData 타입을 담는 List타입의 필드가 있다고 한다면 우리의 의도는 SubData 에 설정한 유효성 검증도 실행되게 하는 것입니다.
 하지만 위에 처럼 코드를 작성한다면 SubData의 필드는 검증에 포함되지 않습니다. 
 다른 처리를 하나 해줘야 하는데 아주 간단합니다.
 
-List타입의 서브 클래스의 유효성까지 체크하고 싶다면,
+List타입의 유효성까지 체크하고 싶다면,
 
 public class RequsetData{
   @NotNull
@@ -64,4 +64,4 @@ public class RequsetData{
   private List<SubData> subDatas;
 }
 
-위에 코드처럼 List로 받는 서브클래스 필드 위에 @Valid 를 추가하면 됩니다.
+위에 코드처럼 List타입 필드 위에 @Valid 를 추가하면 됩니다.
