@@ -1,0 +1,41 @@
+<sql에서 group by 쓰는법>
+
+예전에 일할 때 group by를 쓰면
+
+select * from table group by table.column 
+
+이런 형식이 가능한 것으로 기억하는데, 
+
+최근 mysql 이나 oracle에서는 select 해올 컬럼과 grouping 하는 컬럼을 맞춰주지 않으면 에러가 난다.
+
+아마도 명확한 기준 없이 묶는 것을 방지 하기 위함과 집계 함수를 사용할 때만 group by를 사용하라는 의미인 것 같다. 
+
+따라서 기존에 group by로 묶어서 데이터를 가져오려면 다음과 같이 사용해야 했다.
+
+
+select *
+    FROM TABLE_A
+        WHERE COLUMN_A
+IN
+( select MAX(COLUMN_A)
+from TABLE
+GROUP BY COLUMN_B )
+
+
+위 SQL의 목적은 
+
+column_b 로 묶어서 데이터를 가져오는 것인데, 
+
+묶었을 때 기준을 column_a(식별자) 중 가장 큰 수로 잡은 것이다. 
+
+(중복없이 명확한 기준을 잡기 위해 식별자 조회)
+
+이것을 서브쿼리로 작성하고 IN 연산자를 이용해 조회하면 
+
+column_b 로 묶이면서 여러개의 column_a(식별자) 중 가장 큰 값 들로 조회된 결과가 나오게 된다.
+
+결론:
+
+특정 컬럼으로 묶어서 데이터를 가져오고 싶다면 group by절을 포함한 서브쿼리를 만들어서 IN 연산자와 함께 조회해야 한다.
+
+group by는 집계 함수와 같이 사용해야 한다.
